@@ -141,3 +141,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ALLOWED_HOSTS = ['*']
 
 STATIC_ROOT = BASE_DIR
+
+# Configure Django App for Heroku.
+import heroku
+heroku.settings(locals())
