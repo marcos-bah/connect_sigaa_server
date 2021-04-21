@@ -139,3 +139,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #heroku
 # Allow all host hosts/domain names for this site
 ALLOWED_HOSTS = ['*']
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
