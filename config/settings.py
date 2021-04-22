@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 # Configure Django App for Heroku.
 import django_on_heroku
-django_on_heroku.settings(locals())
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-+x8q!1rsmo61i64tm+5sx8bml=(=q8qeo=xi1aa%5sm-_!#84e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://connect-sigaa-server.herokuapp.com/']
 
 # Application definition
 
@@ -139,3 +139,4 @@ REST_FRAMEWORK = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+django_on_heroku.settings(locals())
