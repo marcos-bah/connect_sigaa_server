@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+x8q!1rsmo61i64tm+5sx8bml=(=q8qeo=xi1aa%5sm-_!#84e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*', 'https://connect-sigaa-server.herokuapp.com']
 

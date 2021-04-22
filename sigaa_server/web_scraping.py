@@ -133,7 +133,7 @@ class ScrapingSigaa():
             
             return saida
         except:
-            return "Erro na autenticação"
+            return {"code": 102, "description": "Erro da coleta dos dados"}
 
 
     def getTasks(self):
