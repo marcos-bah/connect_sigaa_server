@@ -199,7 +199,7 @@ class ScrapingSigaa():
         
         return saida
     
-    
+'''   
 def changeHour(self, sigaaBase):
     print(sigaaBase)
     DIAS = {
@@ -262,7 +262,7 @@ user = ScrapingSigaa(userlogin="14755223636", userpass="Arara.azul123")
 #print(changeHour(self=0, sigaaBase="3M45 5M23"))
 print(user.getTasks())
 user.dispose()
-
+'''
            
 
 
