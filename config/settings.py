@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-+x8q!1rsmo61i64tm+5sx8bml=(=q8qeo=xi1aa%5sm-_!#84e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://connect-sigaa-server.herokuapp.com','https://connect-sigaa-server.herokuapp.com/*', '*']
+ALLOWED_HOSTS = ['*', 'https://connect-sigaa-server.herokuapp.com']
 
 # Application definition
 
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #adicionand token
-    'rest_framework.authtoken',
+    #'rest_framework.authtoken',
     #adicionando aplicativo
     'sigaa_server',
     #adicionando api
@@ -128,14 +128,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/staticfiles/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 
-REST_FRAMEWORK = {
+'''REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication'
     ]
-}
+}'''
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
