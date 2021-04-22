@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 # Configure Django App for Heroku.
-import heroku
-heroku.settings(locals())
+import django_on_heroku
+django_on_heroku.settings(locals())
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
