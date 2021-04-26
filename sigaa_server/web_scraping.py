@@ -77,7 +77,7 @@ class ScrapingSigaa():
                 inicio = HORARIOS[lista[pos]+lista[pos+1]]["inicio"]
                 fim = HORARIOS[lista[pos]+lista[-1]]["fim"]
 
-                saida[bases.strip() if len(horario) > 1 else tempos] = {
+                saida = {
                     "dias_semana": dia,
                     "hr_inicio": inicio,
                     "hr_fim": fim,
