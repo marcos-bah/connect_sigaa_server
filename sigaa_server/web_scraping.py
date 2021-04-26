@@ -149,7 +149,7 @@ class ScrapingSigaa():
         df.columns = ["feito", "data", "atividade"]
         df["feito"] = df["feito"].apply(lambda x : x==NaN if None else None )
         
-        return df.to_dict()
+        return df.to_dict('records')
 
     def getClasses(self):
         print("iniciando busca por aulas do user: ", self.userlogin)
@@ -164,7 +164,7 @@ class ScrapingSigaa():
         df.columns = ["disciplina", "local", "horario"]
         df["horario"] = df["horario"].apply(lambda x : self.changeHour(sigaaBase=x))
       
-        return df.to_dict()
+        return df.to_dict('records')
 
     def getAll(self):
         saida = {
