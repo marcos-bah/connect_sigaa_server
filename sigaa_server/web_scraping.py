@@ -31,12 +31,12 @@ class ScrapingSigaa():
     def changeHour(self, sigaaBase):
         print(sigaaBase)
         DIAS = {
-            2: 'SEG',
-            3: 'TER',
-            4: 'QUA',
-            5: 'QUI',
-            6: 'SEX',
-            7: 'SAB'
+            2: 1,
+            3: 2,
+            4: 3,
+            5: 4,
+            6: 5,
+            7: 6
         }
 
         HORARIOS = {
