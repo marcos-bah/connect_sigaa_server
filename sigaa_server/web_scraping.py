@@ -164,7 +164,7 @@ class ScrapingSigaa():
         df.columns = ["disciplina", "local", "horario"]
         df["horario"] = df["horario"].apply(lambda x : self.changeHour(sigaaBase=x))
       
-        return df.to_dict('records')
+        return df.to_dict()
 
     def getAll(self):
         saida = {
