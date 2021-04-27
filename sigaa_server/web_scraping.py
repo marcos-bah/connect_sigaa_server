@@ -29,7 +29,6 @@ class ScrapingSigaa():
         self.browser.close()
 
     def changeHour(self, sigaaBase):
-        print(sigaaBase)
         DIAS = {
             2: 1,
             3: 2,
@@ -65,6 +64,8 @@ class ScrapingSigaa():
         for bases in sigaaBase.split(","):
 
             horario = bases.strip().replace(")","").split(" (")
+
+            dia = []
         
             for tempos in horario[0].split(" "):
                 lista = list(tempos)
@@ -72,16 +73,15 @@ class ScrapingSigaa():
                 for turno in TURNOS:
                     if(turno in lista):
                         pos = lista.index(turno)
-                
-                dia = [DIAS[int(dias)] for dias in lista[:pos]]
+              
+                dia.extend(DIAS[int(dias)] for dias in lista[:pos])
                 inicio = HORARIOS[lista[pos]+lista[pos+1]]["inicio"]
                 fim = HORARIOS[lista[pos]+lista[-1]]["fim"]
-
-                saida = {
-                    "dias_semana": dia,
-                    "hr_inicio": inicio,
-                    "hr_fim": fim,
-                    "dias_datas":  horario[1].strip().split(" - ") if len(horario) > 1 else ""
+            saida = {
+                "dias_semana": dia,
+                "hr_inicio": inicio,
+                "hr_fim": fim,
+                "dias_datas":  horario[1].strip().split(" - ") if len(horario) > 1 else ""
                 }
         return saida
 
