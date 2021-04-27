@@ -2,6 +2,7 @@ import mechanize as mechanize
 from bs4 import BeautifulSoup as bs
 import http.cookiejar as cookielib
 from numpy import NaN
+from datetime import datetime
 
 import pandas as pd
 
@@ -171,6 +172,7 @@ class ScrapingSigaa():
             "user_data": self.getDataUser(),
             "tasks": self.getTasks(),
             "classes": self.getClasses(),
+            "date": datetime.now(),
         }
 
         return saida
