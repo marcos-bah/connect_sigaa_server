@@ -5,6 +5,7 @@ from numpy import NaN
 from datetime import datetime
 
 import pandas as pd
+from pandas.core.frame import DataFrame
 
 class ScrapingSigaa():
 
@@ -140,16 +141,35 @@ class ScrapingSigaa():
     def getTasks(self):
         print("iniciando busca por tarefas do user: ", self.userlogin)
 
-        atividades = self.soup.find(id="avaliacao-portal")
-        vazio = atividades.find(class_='vazio')
+        myatividades = self.soup.find(id="avaliacao-portal")
+        vazio = myatividades.find(class_='vazio')
         
         if(vazio!=None):
             return vazio.text.strip() 
 
-        df = pd.read_html(str(atividades), header=0)[0]
-        df.columns = ["feito", "data", "atividade"]
-        df["feito"] = df["feito"].apply(lambda x : x==NaN if None else None )
+        feitos = []
+        for ativ in myatividades.find_all(name="img"):
+            feitos.append(ativ.get('title'))
+
+        tipos = []
+        for ativ in myatividades.find_all(name="strong"):
+            tipos.append(ativ.text)
+
+        atividades = []
+        for ativ in myatividades.find_all(name="a"):
+            atividades.append(ativ.text)
+
+        disciplina = []
+        for ativ in myatividades.find_all(name="small"):
+            disciplina.append(ativ.text.split("\n")[2].strip())
         
+        df = DataFrame()
+
+        df["feitos"] = feitos
+        df["tipos"] = tipos
+        df["atividades"] = atividades[:-1]
+        df["disciplinas"] = disciplina
+      
         return df.to_dict('records')
 
     def getClasses(self):
