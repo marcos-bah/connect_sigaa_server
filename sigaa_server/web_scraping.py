@@ -162,14 +162,16 @@ class ScrapingSigaa():
         disciplina = []
         for ativ in myatividades.find_all(name="small"):
             disciplina.append(ativ.text.split("\n")[2].strip())
-        
+
+        df1 = pd.read_html(str(myatividades), header=0)[0].iloc[:,1]
         df = DataFrame()
 
+        df["datas"] = df1.tolist()
         df["feitos"] = feitos
         df["tipos"] = tipos
         df["atividades"] = atividades[:-1]
         df["disciplinas"] = disciplina
-      
+
         return df.to_dict('records')
 
     def getClasses(self):
