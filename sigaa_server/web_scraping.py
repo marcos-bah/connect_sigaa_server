@@ -223,70 +223,7 @@ class ScrapingSigaa():
         
         return saida
     
-'''   
-def changeHour(self, sigaaBase):
-    print(sigaaBase)
-    DIAS = {
-        2: 'SEG',
-        3: 'TER',
-        4: 'QUA',
-        5: 'QUI',
-        6: 'SEX',
-        7: 'SAB'
-    }
 
-    HORARIOS = {
-        'M1': {"inicio": '08:00', "fim": '08:55'},
-        'M2': {"inicio": '08:55', "fim": '09:50'},
-        'M3': {"inicio": '10:00', "fim": '10:55'},
-        'M4': {"inicio": '10:55', "fim": '11:50'},
-        'M5': {"inicio": '12:00', "fim": '12:55'},
-        'T1': {"inicio": '12:55', "fim": '13:50'},
-        'T2': {"inicio": '14:00', "fim": '14:55'},
-        'T3': {"inicio": '14:55', "fim": '15:50'},
-        'T4': {"inicio": '16:00', "fim": '16:55'},
-        'T5': {"inicio": '16:55', "fim": '17:50'},
-        'T6': {"inicio": '18:00', "fim": '18:55'},
-        'T7': {"inicio": '18:55', "fim": '19:50'},
-        'N1': {"inicio": '19:00', "fim": '19:50'},
-        'N2': {"inicio": '19:50', "fim": '20:40'},
-        'N3': {"inicio": '20:50', "fim": '21:40'},
-        'N4': {"inicio": '21:40', "fim": '22:30'}
-    }
-
-    TURNOS = ['M', 'T', 'N']
-
-    saida = dict()
-
-    for bases in sigaaBase.split(","):
-
-        horario = bases.strip().replace(")","").split(" (")
-    
-        for tempos in horario[0].split(" "):
-            lista = list(tempos)
-
-            for turno in TURNOS:
-                if(turno in lista):
-                    pos = lista.index(turno)
-            
-            dia = [DIAS[int(dias)] for dias in lista[:pos]]
-            inicio = HORARIOS[lista[pos]+lista[pos+1]]["inicio"]
-            fim = HORARIOS[lista[pos]+lista[-1]]["fim"]
-
-            saida[bases.strip() if len(horario) > 1 else tempos] = {
-                "dias_semana": dia,
-                "hr_inicio": inicio,
-                "hr_fim": fim,
-                "dias_datas":  horario[1].strip().split(" - ") if len(horario) > 1 else ""
-            }
-    return saida
-
-  
-user = ScrapingSigaa(userlogin="14755223636", userpass="Arara.azul123")
-#print(changeHour(self=0, sigaaBase="3M45 5M23"))
-print(user.getTasks())
-user.dispose()
-'''
            
 
 
