@@ -1,3 +1,4 @@
+[![Django CI](https://github.com/marcos-bah/connect_sigaa_server/actions/workflows/django.yml/badge.svg)](https://github.com/marcos-bah/connect_sigaa_server/actions/workflows/django.yml)
 ![](https://img.shields.io/badge/Code-Django-informational?style=flat&logo=django&logoColor=white&color=004FFF)
 ![](https://img.shields.io/badge/Status-Beta-informational?style=flat&logoColor=white&color=004FFF)
 ![](https://img.shields.io/badge/Open-Source-informational?style=flat&logoColor=white&color=004FFF) 
