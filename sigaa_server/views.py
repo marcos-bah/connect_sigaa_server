@@ -12,9 +12,9 @@ class UserDataViewSet(APIView):
             try:
                 response = user.getDataUser()
             except Exception as e:
-                response = {"code": 101, "description": "Erro na coleta dos dados", "error": e}
+                response = {"code": 101, "description": "Erro na coleta dos dados", "error": str(e)}
         except Exception as e:
-            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'}", "error": e}
+            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'}", "error": str(e)}
         return Response(response)
 
 class UserTasksViewSet(APIView):
@@ -24,9 +24,9 @@ class UserTasksViewSet(APIView):
             try:
                 response = user.getTasks()
             except Exception as e:
-                response = {"code": 101, "description": "Erro na coleta dos dados", "error": e, "error": e}
+                response = {"code": 101, "description": "Erro na coleta dos dados", "error": e, "error": str(e)}
         except Exception as e:
-            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'}", "error": e}
+            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'}", "error": str(e)}
         return Response(response)
 
 class UserClassesViewSet(APIView):
@@ -36,9 +36,9 @@ class UserClassesViewSet(APIView):
             try:
                 response = user.getClasses()
             except Exception as e:
-                response = {"code": 101, "description": "Erro na coleta dos dados", "error": e}
+                response = {"code": 101, "description": "Erro na coleta dos dados", "error": str(e)}
         except Exception as e:
-            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'", "error": e}
+            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'", "error": str(e)}
         return Response(response)
 
 class UserAllViewSet(APIView):
@@ -48,9 +48,9 @@ class UserAllViewSet(APIView):
             try:
                 response = user.getAll()
             except Exception as e:
-                response = {"code": 101, "description": "Erro na coleta dos dados", "error": e}
+                response = {"code": 101, "description": "Erro na coleta dos dados", "error": str(e)}
         except Exception as e:
-            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'", "error": e}
+            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'", "error": str(e)}
         return Response(response)
 
 class UserLastClassesViewSet(APIView):
@@ -61,9 +61,9 @@ class UserLastClassesViewSet(APIView):
             try:
                 response = user.getLastClasses()
             except Exception as e:
-                response = {"code": 101, "description": "Erro na coleta dos dados", "error": e}
+                response = {"code": 101, "description": "Erro na coleta dos dados", "error": str(e)}
         except Exception as e:
-            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'", "error": e}
+            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'", "error": str(e)}
         return Response(response)
 
     
