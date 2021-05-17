@@ -6,8 +6,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/marcos-bah/connect_sigaa_server">
-    <img src="staticfiles/logos/EFEI_logo.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/marcos-bah/connect_sigaa_server">   
+<img src="staticfiles/logos/EFEI_logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Connect Sigaa Server [BETA]</h3>
@@ -58,7 +58,7 @@
 
 <img src="staticfiles/screenshot.png" alt="Logo" width="700" height="400">
 
-Já pensou em criar soluções para o sitema académico sigaa? Criar seus próprios aplicativos, bots ou até mesmos sites, com um novo visual? Novas conexões? Com mais liberdade?
+Já pensou em criar soluções para o sistema académico sigaa? Criar seus próprios aplicativos, bots ou até mesmos sites, com um novo visual? Novas conexões? Com mais liberdade?
 
 Por isso o Connect existe, para conectar novas ideias, pessoas.
 
