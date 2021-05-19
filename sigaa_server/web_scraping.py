@@ -147,12 +147,13 @@ class ScrapingSigaa():
             return vazio.text.strip() 
 
         feitos = []
-        for ativ in myatividades.find_all(name="img"):
-            feitos.append(ativ.get('title'))
+        for ativ in myatividades.find_all('td', style=lambda value: value and 'text-align:center' in value):
+            if (ativ.find(name="img") != None) : feitos.append(ativ.find(name="img").get('title'))
+            else: feitos.append("Atividade passada")
 
         tipos = []
         for ativ in myatividades.find_all(name="strong"):
-            if (ativ.find("font") == None) : tipos.append(ativ.text)
+            tipos.append(ativ.text)
 
         atividades = []
         for ativ in myatividades.find_all(name="a"):
@@ -160,21 +161,17 @@ class ScrapingSigaa():
 
         disciplina = []
         for ativ in myatividades.find_all(name="small"):
-            if (ativ.text.split("\n")[2].strip()!='') : disciplina.append(ativ.text.split("\n")[2].strip())
+            disciplina.append(ativ.text.split("\n")[2].strip())
 
-        df1 = pd.read_html(str(myatividades), header=0)[0].iloc[:,1]
+        df_data = pd.read_html(str(myatividades), header=0)[0].iloc[:,1]
         df = DataFrame()
 
-        if(len(feitos) != len(tipos)):
-            inicio = len(tipos) - len(feitos)
-        else:
-            inicio = 0
-
-        df["datas"] = df1.tolist()[inicio:]
+        df["datas"] = df_data.tolist()
         df["feitos"] = feitos
-        df["tipos"] = tipos[inicio:]
-        df["atividades"] = atividades[inicio:-1]
+        df["tipos"] = tipos
+        df["atividades"] = atividades[:-1]
         df["disciplinas"] = disciplina
+
 
         return df.to_dict('records')
 
@@ -199,8 +196,6 @@ class ScrapingSigaa():
             "tasks": self.getTasks(),
             "classes": self.getClasses(),
         }
-        print(saida)
-
         return saida
 
     def getLastClasses(self):
