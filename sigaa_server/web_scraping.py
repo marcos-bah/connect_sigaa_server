@@ -13,6 +13,7 @@ class ScrapingSigaa():
         self.userpass = userpass
         self.cookies = cookielib.CookieJar()  # cria um repositório de cookies
         self.browser = mechanize.Browser()    # inicia um browser
+        self.browser.set_handle_robots(False)
         self.browser.set_cookiejar(self.cookies)   # aponta para o seu repositório de cookies
         self.url = url
 
@@ -133,62 +134,80 @@ class ScrapingSigaa():
                 i += 1
             
             return saida
-        except:
-            return {"code": 102, "description": "Erro da coleta dos dados"}
+        except Exception as e:
+            return str(e);
 
 
     def getTasks(self):
         print("iniciando busca por tarefas do user: ", self.userlogin)
 
-        myatividades = self.soup.find(id="avaliacao-portal")
-        vazio = myatividades.find(class_='vazio')
-        
-        if(vazio!=None):
-            return vazio.text.strip() 
+        try:
+            myatividades = self.soup.find(id="avaliacao-portal")
+            vazio = myatividades.find(class_='vazio')
+            
+            if(vazio!=None):
+                return vazio.text.strip() 
 
-        feitos = []
-        for ativ in myatividades.find_all('td', style=lambda value: value and 'text-align:center' in value):
-            if (ativ.find(name="img") != None) : feitos.append(ativ.find(name="img").get('title'))
-            else: feitos.append("Atividade passada")
+            feitos = []
+            for ativ in myatividades.find_all('td', style=lambda value: value and 'text-align:center' in value):
+                if (ativ.find(name="img") != None) : feitos.append(ativ.find(name="img").get('title'))
+                else: feitos.append("Atividade passada")
 
-        tipos = []
-        for ativ in myatividades.find_all(name="strong"):
-            tipos.append(ativ.text)
+            tipos = []
+            atividades = []
+            disciplina = []
+            for ativ in myatividades.find_all(name="small"):
+                novo = []
+                for x in ativ.text.split("\n"):
+                    item = x
+                    for y in ['\n', '\t', '/', '.', '-', '(', ')']:
+                        item = item.replace(y, "")
+                    item = item.split(":")
+                    if (item != ['']): novo.extend(item)
+                novo = [elemento for elemento in novo if elemento.strip()]
+                atividades.append(novo[2])
+                tipos.append(novo[1])
+                disciplina.append(novo[0])
 
-        atividades = []
-        for ativ in myatividades.find_all(name="a"):
-            atividades.append(ativ.text)
+            df_data = pd.read_html(str(myatividades), header=0)[0].iloc[:,1]
+            df = DataFrame()
 
-        disciplina = []
-        for ativ in myatividades.find_all(name="small"):
-            disciplina.append(ativ.text.split("\n")[2].strip())
+            df_data = df_data.tolist()
+            
+            for x in range(len(df_data)):
+                if("(" in df_data[x]):
+                    if(feitos[x] == "Atividade passada"):
+                        feitos[x] = "Atividade futura"
 
-        df_data = pd.read_html(str(myatividades), header=0)[0].iloc[:,1]
-        df = DataFrame()
-
-        df["datas"] = df_data.tolist()
-        df["feitos"] = feitos
-        df["tipos"] = tipos
-        df["atividades"] = atividades[:-1]
-        df["disciplinas"] = disciplina
+            df["data"] = df_data
+            df["feito"] = feitos
+            df["tipo"] = tipos
+            df["atividade"] = atividades
+            df["disciplina"] = disciplina
 
 
-        return df.to_dict('records')
+            return df.to_dict('records')
+        except Exception as e:
+            return str(e);
+            
 
     def getClasses(self):
         print("iniciando busca por aulas do user: ", self.userlogin)
 
-        aulas = self.soup.find(id="turmas-portal")
-        vazio = aulas.find(class_='vazio')
-        
-        if(vazio!=None):
-            return vazio.text.strip() 
+        try:
+            aulas = self.soup.find(id="turmas-portal")
+            vazio = aulas.find(class_='vazio')
+            
+            if(vazio!=None):
+                return vazio.text.strip() 
 
-        df = pd.read_html(str(aulas), header=0)[-1].iloc[:,0:3].dropna()
-        df.columns = ["disciplina", "local", "horario"]
-        df["horario"] = df["horario"].apply(lambda x : self.changeHour(sigaaBase=x))
-      
-        return df.to_dict('records')
+            df = pd.read_html(str(aulas), header=0)[-1].iloc[:,0:3].dropna()
+            df.columns = ["disciplina", "local", "horario"]
+            df["horario"] = df["horario"].apply(lambda x : self.changeHour(sigaaBase=x))
+        
+            return df.to_dict('records')
+        except Exception as e:
+            return str(e);
 
     def getAll(self):
         saida = {
