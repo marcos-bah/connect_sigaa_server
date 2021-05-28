@@ -38,7 +38,8 @@ class UserClassesViewSet(APIView):
             except Exception as e:
                 response = {"code": 101, "description": "Erro na coleta dos dados", "error": str(e)}
         except Exception as e:
-            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'", "error": str(e)}
+            print(e)
+            response = {"code": 100, "description": "Erro nas credenciais", "error": str(e)}
         return Response(response)
 
 class UserAllViewSet(APIView):
@@ -50,7 +51,7 @@ class UserAllViewSet(APIView):
             except Exception as e:
                 response = {"code": 101, "description": "Erro na coleta dos dados", "error": str(e)}
         except Exception as e:
-            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'", "error": str(e)}
+            response = {"code": 100, "description": "Erro nas credenciais", "error": str(e)}
         return Response(response)
 
 class UserLastClassesViewSet(APIView):
