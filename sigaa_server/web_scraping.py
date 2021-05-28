@@ -1,7 +1,6 @@
 import mechanize as mechanize
 from bs4 import BeautifulSoup as bs
 import http.cookiejar as cookielib
-from numpy import NaN
 
 import pandas as pd
 from pandas.core.frame import DataFrame
@@ -26,7 +25,9 @@ class ScrapingSigaa():
         self.browser.submit()
         self.pagina = self.browser.response().read()
         self.soup = bs(self.pagina, 'html.parser')
-
+        self.perfil = self.soup.find(id="perfil-docente")
+        self.nome = self.perfil.find(name="b").text
+        
     def dispose(self):
         self.browser.close()
 
@@ -91,13 +92,11 @@ class ScrapingSigaa():
         print("iniciando busca por user: ", self.userlogin)
 
         try:
-            perfil = self.soup.find(id="perfil-docente")
-            nome = perfil.find(name="b").text
-            dados_universidade = perfil.find(name="table")
+            dados_universidade = self.perfil.find(name="table")
             
             i = 0
             saida = dict()
-            saida["nome"] = nome
+            saida["nome"] = self.nome
            
             for row in dados_universidade.findAll("td"):
              
