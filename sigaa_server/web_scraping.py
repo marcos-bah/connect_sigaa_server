@@ -164,7 +164,7 @@ class ScrapingSigaa():
                     item = item.split(":")
                     if (item != ['']): novo.extend(item)
                 novo = [elemento for elemento in novo if elemento.strip()]
-                atividades.append(novo[2])
+                atividades.append(novo[2].strip())
                 tipos.append(novo[1])
                 disciplina.append(novo[0])
 
@@ -176,13 +176,15 @@ class ScrapingSigaa():
             for x in range(len(df_data)):
                 if("(" in df_data[x]):
                     if(feitos[x] == "Atividade passada"):
-                        feitos[x] = "Atividade futura"
+                        feitos[x] = "Atividade para a próxima semana"
 
             df["data"] = df_data
             df["feito"] = feitos
             df["tipo"] = tipos
             df["atividade"] = atividades
             df["disciplina"] = disciplina
+
+            df = df.sort_values(['feito'])
 
 
             return df.to_dict('records')
