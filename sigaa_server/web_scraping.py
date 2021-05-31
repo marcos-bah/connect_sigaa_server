@@ -179,12 +179,13 @@ class ScrapingSigaa():
                         feitos[x] = "Atividade para a próxima semana"
 
             df["data"] = df_data
+            df["data"] = df["data"].apply(lambda x : pd.to_datetime(x.split(" ")[0], dayfirst=True))
             df["feito"] = feitos
             df["tipo"] = tipos
             df["atividade"] = atividades
             df["disciplina"] = disciplina
 
-            df = df.sort_values(['feito'])
+            df = df.sort_values(by="data")
 
 
             return df.to_dict('records')
@@ -215,6 +216,7 @@ class ScrapingSigaa():
             "user_data": self.getDataUser(),
             "tasks": self.getTasks(),
             "classes": self.getClasses(),
+            #"last_classes": self.getLastClasses(),
         }
         return saida
 
