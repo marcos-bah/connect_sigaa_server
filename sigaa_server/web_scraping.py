@@ -136,6 +136,9 @@ class ScrapingSigaa():
         except Exception as e:
             return str(e);
 
+    def getNotices(self):
+        return "";
+
 
     def getTasks(self):
         print("iniciando busca por tarefas do user: ", self.userlogin)
