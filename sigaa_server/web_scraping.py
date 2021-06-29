@@ -5,6 +5,8 @@ import http.cookiejar as cookielib
 import pandas as pd
 from pandas.core.frame import DataFrame
 
+from selenium import webdriver
+
 class ScrapingSigaa():
 
     def __init__(self, userlogin, userpass, url='https://sigaa.unifei.edu.br/sigaa/verTelaLogin.do'):
@@ -136,8 +138,30 @@ class ScrapingSigaa():
         except Exception as e:
             return str(e);
 
-    def getNotices(self):
+    def getBodyClass(self):
+        print("iniciando busca pelas atualizacoes das disciplinas")
+
         return "";
+
+    def getNotices(self):
+        print("iniciando busca por noticias")
+        try:
+            saida = []
+            notices = self.soup.find(id="formAtualizacoesTurmas")
+            for tables in notices.find_all('table'):
+                s = {}
+                i = 0
+                for notice in tables.find_all('td'):
+                    if(i%2==0):
+                        s["title"] = notice.text.strip().replace("\t", "").replace("\n", "")
+                    else:
+                        s["notice"] = notice.text.strip().replace("\t", "").replace("\n", "")
+                    i += 1
+                saida.append(s)
+        
+            return saida;
+        except Exception as e:
+            return str(e);
 
 
     def getTasks(self):

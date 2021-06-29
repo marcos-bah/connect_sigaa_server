@@ -20,7 +20,18 @@ class UserDataViewSet(APIView):
 class main(APIView):
     def get(self, request, *args, **kwargs):
         return redirect("https://github.com/marcos-bah/connect_sigaa_server")
-        
+
+class UserBodyClassViewSet(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            user = ScrapingSigaa(userlogin=request.data["userlogin"],userpass= request.data["userpass"])
+            try:
+                response = user.getBodyClass()
+            except Exception as e:
+                response = {"code": 101, "description": "Erro na coleta dos dados", "error": e, "error": str(e)}
+        except Exception as e:
+            response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'}", "error": str(e)}
+        return Response(response)      
 class UserNoticesViewSet(APIView):
     def post(self, request, *args, **kwargs):
         try:
