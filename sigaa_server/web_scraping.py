@@ -67,15 +67,19 @@ class ScrapingSigaa():
         saida = dict()
     
         for bases in sigaaBase.split(","):
+            pos = 0
 
             horario = bases.strip().replace(")","").split(" (")
+            print(horario);
 
             dia = []
         
             for tempos in horario[0].split(" "):
                 lista = list(tempos)
+                print(lista)
 
                 for turno in TURNOS:
+                    print(turno)
                     if(turno in lista):
                         pos = lista.index(turno)
               
@@ -168,21 +172,24 @@ class ScrapingSigaa():
         print("iniciando busca por tarefas do user: ", self.userlogin)
 
         try:
-            myatividades = self.soup.find(id="avaliacao-portal")
-            vazio = myatividades.find(class_='vazio')
+            portal = self.soup.find(id="avaliacao-portal")
+            vazio = portal.find(class_='vazio')
             
             if(vazio!=None):
                 return vazio.text.strip() 
 
-            feitos = []
-            for ativ in myatividades.find_all('td', style=lambda value: value and 'text-align:center' in value):
-                if (ativ.find(name="img") != None) : feitos.append(ativ.find(name="img").get('title'))
-                else: feitos.append("Atividade passada")
 
+            df = DataFrame()
+            feitos = []
             tipos = []
             atividades = []
             disciplina = []
-            for ativ in myatividades.find_all(name="small"):
+
+            for ativ in portal.find_all('td', style=lambda value: value and 'text-align:center' in value):
+                if (ativ.find(name="img") != None) : feitos.append(ativ.find(name="img").get('title'))
+                else: feitos.append("Atividade passada")
+            
+            for ativ in portal.find_all(name="small"):
                 novo = []
                 for x in ativ.text.split("\n"):
                     item = x
@@ -195,11 +202,9 @@ class ScrapingSigaa():
                 tipos.append(novo[1])
                 disciplina.append(novo[0])
 
-            df_data = pd.read_html(str(myatividades), header=0)[0].iloc[:,1]
-            df = DataFrame()
+            df_data = pd.read_html(str(portal), header=0)[0].iloc[:,1]
+            df_data = df_data.tolist()[1:]
 
-            df_data = df_data.tolist()
-            
             for x in range(len(df_data)):
                 if("(" in df_data[x]):
                     if(feitos[x] == "Atividade passada"):
@@ -213,7 +218,6 @@ class ScrapingSigaa():
             df["disciplina"] = disciplina
 
             df = df.sort_values(by="data")
-
 
             return df.to_dict('records')
         except Exception as e:
@@ -230,9 +234,11 @@ class ScrapingSigaa():
             if(vazio!=None):
                 return vazio.text.strip() 
 
-            df = pd.read_html(str(aulas), header=0)[-1].iloc[:,0:3].dropna()
+            df = pd.read_html(str(aulas), header=0)[-1].iloc[1:,0:3].dropna()
             df.columns = ["disciplina", "local", "horario"]
             df["horario"] = df["horario"].apply(lambda x : self.changeHour(sigaaBase=x))
+
+            print(df);
         
             return df.to_dict('records')
         except Exception as e:
@@ -244,6 +250,7 @@ class ScrapingSigaa():
             "tasks": self.getTasks(),
             "classes": self.getClasses(),
             #"last_classes": self.getLastClasses(),
+            #"notices": self.getNotices(),
         }
         return saida
 
