@@ -77,7 +77,6 @@ class ScrapingSigaa():
                 lista = list(tempos)
 
                 for turno in TURNOS:
-                    print(turno)
                     if(turno in lista):
                         pos = lista.index(turno)
               
