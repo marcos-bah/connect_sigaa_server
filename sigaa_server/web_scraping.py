@@ -5,8 +5,6 @@ import http.cookiejar as cookielib
 import pandas as pd
 from pandas.core.frame import DataFrame
 
-from selenium import webdriver
-
 class ScrapingSigaa():
 
     def __init__(self, userlogin, userpass, url='https://sigaa.unifei.edu.br/sigaa/verTelaLogin.do'):
