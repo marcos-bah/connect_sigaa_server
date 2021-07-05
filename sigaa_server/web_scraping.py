@@ -10,6 +10,7 @@ class ScrapingSigaa():
     def __init__(self, userlogin, userpass, url='https://sigaa.unifei.edu.br/sigaa/verTelaLogin.do'):
         self.userlogin = userlogin
         self.userpass = userpass
+        self.error = "Usuário e/ou senha inválidos";
         self.cookies = cookielib.CookieJar()  # cria um repositório de cookies
         self.browser = mechanize.Browser()    # inicia um browser
         self.browser.set_handle_robots(False)
@@ -25,9 +26,28 @@ class ScrapingSigaa():
         self.browser.submit()
         self.pagina = self.browser.response().read()
         self.soup = bs(self.pagina, 'html.parser')
+        self.isLoginFailed()
+        self.isPageValid()
+
+    def isLoginFailed(self):
+        res = self.soup.find('center', style=lambda value: value and 'color: #922' in value)
+        if(res != None):
+            raise ValueError("Credencial inválida")
+    
+    def isPageValid(self):
         self.perfil = self.soup.find(id="perfil-docente")
-        self.nome = self.perfil.find(name="b").text
-        
+        if(self.perfil == None):
+            self.browser.select_form(nr=0)
+            self.browser.submit()
+            self.pagina = self.browser.response().read()
+            self.soup = bs(self.pagina, 'html.parser')
+            self.perfil = self.soup.find(id="perfil-docente")
+            self.nome = self.perfil.find(name="b").text
+        else:
+            self.perfil = self.soup.find(id="perfil-docente")
+            self.nome = self.perfil.find(name="b").text
+
+
     def dispose(self):
         self.browser.close()
 
