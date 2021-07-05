@@ -90,6 +90,8 @@ class ScrapingSigaa():
             horario = bases.strip().replace(")","").split(" (")
 
             dia = []
+            inicio = []
+            fim = []
         
             for tempos in horario[0].split(" "):
                 lista = list(tempos)
@@ -98,14 +100,14 @@ class ScrapingSigaa():
                     if(turno in lista):
                         pos = lista.index(turno)
               
-                dia.extend(DIAS[int(dias)] for dias in lista[:pos])
-                inicio = HORARIOS[lista[pos]+lista[pos+1]]["inicio"]
-                fim = HORARIOS[lista[pos]+lista[-1]]["fim"]
+                dia.extend(DIAS[int(dias)] for dias in lista[:pos])   
+                inicio.append(HORARIOS[lista[pos]+lista[pos+1]]["inicio"])
+                fim.append(HORARIOS[lista[pos]+lista[-1]]["fim"])
+            
             saida = {
                 "dias_semana": dia,
-                "hr_inicio": inicio,
-                "hr_fim": fim,
-                "dias_datas":  horario[1].strip().split(" - ") if len(horario) > 1 else ""
+                "hr_inicio": inicio*len(dia) if len(dia) != len(inicio) else inicio,
+                "hr_fim": fim*len(dia) if len(dia) != len(fim) else fim,
                 }
         return saida
 
