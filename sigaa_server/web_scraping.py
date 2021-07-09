@@ -292,4 +292,6 @@ class ScrapingSigaa():
             aux += 1
         
         return saida
+
+   
     
