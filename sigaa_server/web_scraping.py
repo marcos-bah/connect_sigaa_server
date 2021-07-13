@@ -5,6 +5,7 @@ import http.cookiejar as cookielib
 import pandas as pd
 from pandas.core.frame import DataFrame
 
+import csv
 class ScrapingSigaa():
 
     def __init__(self, userlogin, userpass, url='https://sigaa.unifei.edu.br/sigaa/verTelaLogin.do'):
@@ -50,6 +51,16 @@ class ScrapingSigaa():
 
     def dispose(self):
         self.browser.close()
+
+    def read_csv(self, file_name):
+        with open(file_name, 'r') as csvfile:
+            reader = csv.DictReader(csvfile)
+            data = {}
+            for row in reader:
+                row['Turma'] = row['Turma'].strip()
+                row['Professor'] = row['Professor'].strip()
+                data[row['Código'].strip()+row['Turma']] = row
+            return data
 
     def changeHour(self, sigaaBase):
         DIAS = {
@@ -243,6 +254,7 @@ class ScrapingSigaa():
 
     def getClasses(self):
         print("iniciando busca por aulas do user: ", self.userlogin)
+        whatsapp_group = self.read_csv('sigaa_server/src/whatsapp_url.csv')
 
         try:
             aulas = self.soup.find(id="turmas-portal")
@@ -254,6 +266,7 @@ class ScrapingSigaa():
             df = pd.read_html(str(aulas), header=0)[-1].iloc[1:,0:3].dropna()
             df.columns = ["disciplina", "local", "horario"]
             df["horario"] = df["horario"].apply(lambda x : self.changeHour(sigaaBase=x))
+            print(df["disciplina"])
         
             return df.to_dict('records')
         except Exception as e:
