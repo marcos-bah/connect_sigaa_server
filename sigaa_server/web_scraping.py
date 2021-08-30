@@ -37,11 +37,12 @@ class ScrapingSigaa():
     def isPageValid(self):
         self.perfil = self.soup.find(id="perfil-docente")
         if(self.perfil == None):
-            self.browser.select_form(nr=0)
-            self.browser.submit()
-            self.pagina = self.browser.response().read()
-            self.soup = bs(self.pagina, 'html.parser')
-            self.perfil = self.soup.find(id="perfil-docente")
+            while(self.perfil == None):
+                self.browser.select_form(nr=0)
+                self.browser.submit()
+                self.pagina = self.browser.response().read()
+                self.soup = bs(self.pagina, 'html.parser')
+                self.perfil = self.soup.find(id="perfil-docente")
             self.nome = self.perfil.find(name="b").text
         else:
             self.perfil = self.soup.find(id="perfil-docente")
