@@ -13,5 +13,5 @@ urlpatterns = [
     path('api/sigaa/classes', views.UserClassesViewSet.as_view()),
     path('api/sigaa/all', views.UserAllViewSet.as_view()),
     path('api/sigaa/lastclasses', views.UserLastClassesViewSet.as_view()),
-
+    path('api/unifei/group', views.UnifeiGetGroupsView.as_view()),
 ]

@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import redirect
 
-from .web_scraping import ScrapingSigaa
+from .web_scraping import ScrapingSigaa, getGroup
 
 #classe que faz as query e serializa os dados
 class UserDataViewSet(APIView):
@@ -115,4 +115,22 @@ class UserLastClassesViewSet(APIView):
     def get(self, request, *args, **kwargs):
         return Response()   
 
+class UnifeiGetGroupsView(APIView):
+    #permission_classes = (IsAuthenticated, )
+    def post(self, request, *args, **kwargs):
+        try:
+            group = getGroup()
+
+            return Response(group.get_group_csv())
+        except Exception as e:
+            response = { "error": str(e)}
+        return Response(response)
     
+    def get(self, request, *args, **kwargs):
+        try:
+            group = getGroup()
+            return Response(group.get_group_csv())
+        except Exception as e:
+            print(e)
+            response = { "error": str(e)}
+        return Response(response)

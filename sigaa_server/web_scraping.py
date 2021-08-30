@@ -5,6 +5,28 @@ import http.cookiejar as cookielib
 import pandas as pd
 from pandas.core.frame import DataFrame
 
+import pandas as pd
+from pandas.core.frame import DataFrame
+   
+class getGroup:
+    def __name__(self):
+        return 'getGroup'
+
+
+    def __init__(self):
+        # get col name value Código Disciplina,Turma,Professor,Link of csv file
+        self.filename = "/home/marcos-barbosa/Documents/dev/pessoal/django-rest/connect_sigaa_server/sigaa_server/CataGrupoUnifei.csv"
+        self.col_name = ['codigo', 'turma', 'professor', 'wpp_url']
+        self.index = 0
+        pass
+
+    def get_group_csv(self):
+        # get csv file(
+        pd_csv = pd.read_csv(self.filename, names=self.col_name, header=1, index_col=False).fillna('')
+        json = pd_csv.to_dict('records')
+        
+        return json
+
 class ScrapingSigaa():
 
     def __init__(self, userlogin, userpass, url='https://sigaa.unifei.edu.br/sigaa/verTelaLogin.do'):
@@ -16,6 +38,9 @@ class ScrapingSigaa():
         self.browser.set_handle_robots(False)
         self.browser.set_cookiejar(self.cookies)   # aponta para o seu repositório de cookies
         self.url = url
+
+        # inicializando grupos
+        self.groups = getGroup().get_group_csv()
 
         #inicializando browser
       
@@ -255,10 +280,12 @@ class ScrapingSigaa():
             df = pd.read_html(str(aulas), header=0)[-1].iloc[1:,0:3].dropna()
             df.columns = ["disciplina", "local", "horario"]
             df["horario"] = df["horario"].apply(lambda x : self.changeHour(sigaaBase=x))
-        
             return df.to_dict('records')
         except Exception as e:
             return str(e)
+
+    def getGroups(self):
+        return self.groups
 
     def getAll(self):
         saida = {
@@ -267,6 +294,7 @@ class ScrapingSigaa():
             "classes": self.getClasses(),
             #"last_classes": self.getLastClasses(),
             "notices": self.getNotices(),
+            "groups" : self.getGroups(),
         }
         return saida
 
