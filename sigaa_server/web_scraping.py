@@ -183,7 +183,7 @@ class ScrapingSigaa():
             
             return saida
         except Exception as e:
-            return str(e);
+            return str(e)
 
     def getBodyClass(self):
         print("iniciando busca pelas atualizacoes das disciplinas")
@@ -292,9 +292,10 @@ class ScrapingSigaa():
             "user_data": self.getDataUser(),
             "tasks": self.getTasks(),
             "classes": self.getClasses(),
+            "classes_with_group" : self.getClassesWithGroup(),
             #"last_classes": self.getLastClasses(),
             "notices": self.getNotices(),
-            "groups" : self.getGroups(),
+            #"groups" : self.getGroups(),
         }
         return saida
 
@@ -321,4 +322,38 @@ class ScrapingSigaa():
             aux += 1
         
         return saida
+
+    def getClassesWithGroup(self):
+        self.browser.open("https://sigaa.unifei.edu.br"+"/sigaa/portais/discente/turmas.jsf")
+        disciplinas = self.browser.response().read()
+        soup = bs(disciplinas, 'html.parser')
+
+        tabela = soup.find(name="table", class_="listagem")
+        periodos = [p.text for p in soup.find_all( class_="periodo")]
+
+        df = pd.read_html(str(tabela),header=1)[0].iloc[:,0:4]
+
+        aux = 0
+        saida = dict()
+        for periodo in periodos:
+            if(aux == 0):
+                saida[periodo] = df.iloc[1:(df.loc[df['Turma'] == float(periodos[1])].index.tolist()[0]),:].to_dict('records')
+            else:
+                if(aux+1==len(periodos)):
+                    saida[periodo] = df.iloc[(df.loc[df['Turma'] == float(periodo)].index.tolist()[0]+1):-1,:].to_dict('records')
+                else:
+                    saida[periodo] = df.iloc[(df.loc[df['Turma'] == float(periodos[aux-1])].index.tolist()[0]+1):(df.loc[df['Turma'] == float(periodo)].index.tolist()[0]),:].to_dict('records')
+            aux += 1
+
+        atual = saida[list(saida.keys())[0]]
+
+        ctt = 0
+        for disciplina in atual:
+            atual[ctt]["Grupo"] = []
+            for row in self.groups:
+                if(row["codigo"] == disciplina["Disciplina"].split("-")[0].strip()):
+                    atual[ctt]["Grupo"].append(row)
+            ctt += 1   
+        
+        return saida[list(saida.keys())[0]]
     

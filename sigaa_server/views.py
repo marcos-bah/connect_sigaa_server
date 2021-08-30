@@ -84,6 +84,22 @@ class UserClassesViewSet(APIView):
     def get(self, request, *args, **kwargs):
         return Response()   
 
+class UserClassesWithGroupViewSet(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            user = ScrapingSigaa(userlogin=request.data["userlogin"],userpass= request.data["userpass"])
+            try:
+                response = user.getClassesWithGroup()
+            except Exception as e:
+                response = {"code": 101, "description": "Erro na coleta dos dados", "error": str(e)}
+        except Exception as e:
+            print(e)
+            response = {"code": 100, "description": "Erro nas credenciais", "error": str(e)}
+        return Response(response)
+
+    def get(self, request, *args, **kwargs):
+        return Response()  
+
 class UserAllViewSet(APIView):
     def post(self, request, *args, **kwargs):
         try:
