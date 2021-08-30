@@ -15,7 +15,7 @@ class getGroup:
 
     def __init__(self):
         # get col name value Código Disciplina,Turma,Professor,Link of csv file
-        self.filename = "/home/marcos-barbosa/Documents/dev/pessoal/django-rest/connect_sigaa_server/sigaa_server/CataGrupoUnifei.csv"
+        self.filename = "sigaa_server/CataGrupoUnifei.csv"
         self.col_name = ['codigo', 'turma', 'professor', 'wpp_url']
         self.index = 0
         pass
