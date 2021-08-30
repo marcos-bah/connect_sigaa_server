@@ -163,7 +163,7 @@ class ScrapingSigaa():
     def getBodyClass(self):
         print("iniciando busca pelas atualizacoes das disciplinas")
 
-        return "";
+        return ""
 
     def getNotices(self):
         print("iniciando busca por noticias")
@@ -181,9 +181,9 @@ class ScrapingSigaa():
                     i += 1
                 saida.append(s)
         
-            return saida;
+            return saida
         except Exception as e:
-            return str(e);
+            return str(e)
 
 
     def getTasks(self):
@@ -239,7 +239,7 @@ class ScrapingSigaa():
 
             return df.to_dict('records')
         except Exception as e:
-            return str(e);
+            return str(e)
             
 
     def getClasses(self):
@@ -258,7 +258,7 @@ class ScrapingSigaa():
         
             return df.to_dict('records')
         except Exception as e:
-            return str(e);
+            return str(e)
 
     def getAll(self):
         saida = {
@@ -266,7 +266,7 @@ class ScrapingSigaa():
             "tasks": self.getTasks(),
             "classes": self.getClasses(),
             #"last_classes": self.getLastClasses(),
-            #"notices": self.getNotices(),
+            "notices": self.getNotices(),
         }
         return saida
 

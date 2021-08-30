@@ -17,6 +17,9 @@ class UserDataViewSet(APIView):
             response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'}", "error": str(e)}
         return Response(response)
 
+    def get(self, request, *args, **kwargs):
+        return Response()   
+
 class main(APIView):
     def get(self, request, *args, **kwargs):
         return redirect("https://github.com/marcos-bah/connect_sigaa_server")
@@ -31,7 +34,10 @@ class UserBodyClassViewSet(APIView):
                 response = {"code": 101, "description": "Erro na coleta dos dados", "error": e, "error": str(e)}
         except Exception as e:
             response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'}", "error": str(e)}
-        return Response(response)      
+        return Response(response)  
+
+    def get(self, request, *args, **kwargs):
+        return Response()    
 class UserNoticesViewSet(APIView):
     def post(self, request, *args, **kwargs):
         try:
@@ -44,6 +50,9 @@ class UserNoticesViewSet(APIView):
             response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'}", "error": str(e)}
         return Response(response)
 
+    def get(self, request, *args, **kwargs):
+        return Response()   
+
 class UserTasksViewSet(APIView):
     def post(self, request, *args, **kwargs):
         try:
@@ -55,6 +64,9 @@ class UserTasksViewSet(APIView):
         except Exception as e:
             response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'}", "error": str(e)}
         return Response(response)
+
+    def get(self, request, *args, **kwargs):
+        return Response()   
 
 class UserClassesViewSet(APIView):
     def post(self, request, *args, **kwargs):
@@ -69,6 +81,9 @@ class UserClassesViewSet(APIView):
             response = {"code": 100, "description": "Erro nas credenciais", "error": str(e)}
         return Response(response)
 
+    def get(self, request, *args, **kwargs):
+        return Response()   
+
 class UserAllViewSet(APIView):
     def post(self, request, *args, **kwargs):
         try:
@@ -80,6 +95,9 @@ class UserAllViewSet(APIView):
         except Exception as e:
             response = {"code": 100, "description": "Erro nas credenciais", "error": str(e)}
         return Response(response)
+
+    def get(self, request, *args, **kwargs):
+        return Response()   
 
 class UserLastClassesViewSet(APIView):
     #permission_classes = (IsAuthenticated, )
@@ -93,5 +111,8 @@ class UserLastClassesViewSet(APIView):
         except Exception as e:
             response = {"code": 100, "description": "Erro nas credenciais", "help": "Use: {'"'userlogin'"':'"'cpf-sigaa'"','"'userpass'"':'"'senha-sigaa'"'", "error": str(e)}
         return Response(response)
+    
+    def get(self, request, *args, **kwargs):
+        return Response()   
 
     
